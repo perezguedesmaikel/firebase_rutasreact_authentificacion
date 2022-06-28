@@ -9,15 +9,16 @@ function App() {
     const [usuario,setUsuario]=useState(null);
     useEffect(()=>{
         app.auth().onAuthStateChanged(usuarioFirebase=>{
-            console.log(usuarioFirebase);
             setUsuario(usuarioFirebase);
         })
     },[]);
   return (
     <div className="App">
-        {usuario?<Home/>:<Login setUsuario={setUsuario}/>}
+        <Routes>
 
-
+            {usuario?<Route path="registrar" element={<Registrar setusuario={setUsuario}/>}/>:<Route path="registrar" element={<Login setUsuario={setUsuario}/>}/>}
+            {usuario?<Route path="/" element={<Home/>}/>:<Route path="/" element={<Login setUsuario={setUsuario}/>}/>}
+        </Routes>
 
     </div>
   );

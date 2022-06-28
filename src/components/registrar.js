@@ -10,8 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {app} from '../fb';
-
-
+import {useNavigate} from "react-router-dom";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -24,20 +23,20 @@ function Copyright(props) {
         </Typography>
     );
 }
-
 const theme = createTheme();
 
 export default function Registrar(props) {
+    const navigate=useNavigate();
      const  handleSubmit =  async(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         await app.auth().createUserWithEmailAndPassword(data.get('email2').toString(), data.get('password2').toString()).then(
             (usuariofirebase) => {
                 props.setusuario(usuariofirebase);
+                navigate('/');
             }
         ).catch(error=>console.log(error));
     };
-
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
